@@ -26,10 +26,21 @@ formatQueryParams(params) {
   }
 
 
-  componentDidMount() {
+  handleSearch = (e) =>{
+    e.preventDefault()
+   const data = {}
+   const formData = new FormData(e.target)
+    for (let value of formData) data[value[0]] = value[1]
+    
+   
+    
+    this.setState({
+      params: data
+    })
+
     const searchURL = 'https://www.googleapis.com/books/v1/volumes';
 
-    const queryString = this.formatQueryParams(this.state.params);
+    const queryString = this.formatQueryParams(data);
     const url = searchURL + '?' + queryString;
 
     console.log(url);
@@ -52,13 +63,15 @@ formatQueryParams(params) {
       .then(res => res.json())
       .then(data => {
         const aBooks = data.items.map( book => {
+          const {title,authors,description,imageLinks} = book.volumeInfo
+          const {saleability,retailPrice} = book.saleInfo
           return {
-            title: book.volumeInfo.title,
-            author: book.volumeInfo.authors,
-            descritption: book.volumeInfo.description,
-            thumbnail_URL: book.volumeInfo.imageLinks.thumbnail,
-            saleability: book.saleInfo.saleability,
-            price: book.saleInfo.retailPrice,
+            title: title,
+            author: authors,
+            description: description,
+            thumbnail_URL: imageLinks.thumbnail,
+            saleability: saleability,
+            price: retailPrice,
           };
         })
 
@@ -86,7 +99,7 @@ formatQueryParams(params) {
   <header>
     <h1>Google Book Search</h1>
     </header> 
-  <Search />
+  <Search handleSearch ={this.handleSearch}/>
   <ul className="books-list">
     <Book />
   </ul>
