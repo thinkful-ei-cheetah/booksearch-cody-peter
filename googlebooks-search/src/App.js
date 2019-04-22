@@ -11,9 +11,9 @@ class App extends Component {
       books: [],
       error:null,
       params: {
-        q: 'verne',
-        printType: 'all',
-        filter: 'ebooks'
+        q: '',
+        printType: '',
+        filter: ''
       
     }
     }
@@ -90,8 +90,24 @@ formatQueryParams(params) {
   }
 
 
+
   render() {
-    console.log(this.state.books)
+
+    let lib = this.state.books
+    console.log(books);
+
+    const books = lib.map(book => {
+      return <Book 
+                title={book.title}
+                author= {book.author}
+                description={book.description}
+                thumbnail_URL={book.thumbnail_URL}
+                saleability= {book.saleability}
+                price= {book.price}
+      />
+    });
+
+
     return (
 
 
@@ -101,7 +117,7 @@ formatQueryParams(params) {
     </header> 
   <Search handleSearch ={this.handleSearch}/>
   <ul className="books-list">
-    <Book />
+    {books}
   </ul>
 
       </div>
