@@ -62,6 +62,8 @@ formatQueryParams(params) {
       })
       .then(res => res.json())
       .then(data => {
+        if(data.totalItems === 0) throw new Error('No books found') 
+
         const aBooks = data.items.map( book => {
           const {title,authors,description,imageLinks} = book.volumeInfo
           const {saleability,retailPrice} = book.saleInfo
@@ -74,8 +76,6 @@ formatQueryParams(params) {
             price: retailPrice,
           };
         })
-
-        console.log(aBooks);
         this.setState({
           books: aBooks,
           error: null
@@ -92,11 +92,12 @@ formatQueryParams(params) {
 
 
   render() {
+    const errorMessage = this.state.error ? <div>{this.state.error}</div> : false
 
     let lib = this.state.books
     console.log(books);
 
-    const books = lib.map(book => {
+    const books = lib.map(book => { 
       return <Book 
                 title={book.title}
                 author= {book.author}
@@ -116,6 +117,7 @@ formatQueryParams(params) {
     <h1>Google Book Search</h1>
     </header> 
   <Search handleSearch ={this.handleSearch}/>
+  {errorMessage}
   <ul className="books-list">
     {books}
   </ul>

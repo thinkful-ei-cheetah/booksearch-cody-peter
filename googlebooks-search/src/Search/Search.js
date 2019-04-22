@@ -8,7 +8,7 @@ class Search extends Component {
             <div>
                 <form onSubmit={ this.props.handleSearch}>
                     <label>Search:</label>
-                    <input type='text' name='q' className='search-bar' placeholder='e.g Happy Potter' />
+                    <input type='text' name='q' className='search-bar' placeholder='e.g Happy Potter' required />
                     <button type="submit">search</button>
                     <div className='filter-bar'>
                     <label>Print Type</label>
