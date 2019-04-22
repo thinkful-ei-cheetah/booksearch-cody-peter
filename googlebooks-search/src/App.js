@@ -51,8 +51,21 @@ formatQueryParams(params) {
       })
       .then(res => res.json())
       .then(data => {
+       const aBooks = data.items.map( book => {
+         console.log(book.volumeInfo.authors);
+          return {
+            title: book.volumeInfo.title,
+            author: book.volumeInfo.authors,
+            descritption: book.volumeInfo.description,
+            thumbnail_URL: book.volumeInfo.imageLinks.thumbnail,
+            saleability: book.saleInfo.saleability,
+            price: book.saleInfo.retailPrice,
+          };
+        })
+
+        console.log(aBooks);
         this.setState({
-          books: data.items,
+          books: aBooks,
           error: null
         });
       })
@@ -75,7 +88,10 @@ formatQueryParams(params) {
     <h1>Google Book Search</h1>
     </header> 
   <Search />
-  <Book />
+  <ul className="books-list">
+    <Book />
+  </ul>
+
       </div>
       
     );

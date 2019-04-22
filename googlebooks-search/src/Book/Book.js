@@ -5,7 +5,7 @@ class Book extends Component {
 
     render() {
         return (
-            <div>test Book</div>
+            <li>test Book</li>
         );
     }
 }
