@@ -51,8 +51,7 @@ formatQueryParams(params) {
       })
       .then(res => res.json())
       .then(data => {
-       const aBooks = data.items.map( book => {
-         console.log(book.volumeInfo.authors);
+        const aBooks = data.items.map( book => {
           return {
             title: book.volumeInfo.title,
             author: book.volumeInfo.authors,
